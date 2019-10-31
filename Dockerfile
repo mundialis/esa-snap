@@ -1,5 +1,4 @@
-#FROM neteler/docker-alpine-grass-gis
-FROM mundialis/grass-py3-pdal
+FROM mundialis/grass-py3-pdal:stable-alpine
 
 LABEL authors="Carmen Tawalika,Markus Neteler"
 LABEL maintainer="tawalika@mundialis.de,neteler@mundialis.de"
@@ -14,31 +13,45 @@ ARG SOURCE_GIT_REF=master
 
 USER root
 
-# Install dependencies and tools
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends --no-install-suggests \
-    build-essential \
-    python3 \
-    vim \
-    wget \
-    zip \
-    && apt-get autoremove -y \
-    && apt-get clean -y
+ENV BUILD_PACKAGES="\
+      maven \
+      openjdk8"
+
+ENV PACKAGES="\
+      git \
+      vim"
+
+WORKDIR /src
+
+# Install minimalistic dependencies and tools
+RUN echo "Install minimalistic dependencies and tools";\
+    apk update; \
+    apk add --no-cache \
+            --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+            --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+            $PACKAGES; \
+    # Add packages just for the GRASS addon install process
+    apk add --no-cache \
+            --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+            --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+            --virtual .build-deps $BUILD_PACKAGES; \
+    #
+    echo "Install step done"
 
 ENV LC_ALL "en_US.UTF-8"
 
 # install SNAPPY
-RUN apt-get install default-jdk maven -y
-ENV JAVA_HOME "/usr/lib/jvm/java-11-openjdk-amd64"
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
+ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
 COPY snap /src/snap
 RUN sh /src/snap/install.sh
-RUN update-alternatives --remove python /usr/bin/python3
-
 
 # Reduce the image size
-RUN apt-get autoremove -y
-RUN apt-get clean -y
+RUN rm -rf /src/*; \
+    # remove build dependencies and any leftover apk cache
+    apk del --no-cache --purge .build-deps; \
+    rm -rf /var/cache/apk/*; \
+    rm -rf /root/.cache
 
 ENTRYPOINT ["/bin/bash"]
 #CMD ["/src/start.sh"]
