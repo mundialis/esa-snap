@@ -26,6 +26,8 @@ RUN apt-get update && apt-get upgrade -y && \
     && apt-get clean -y
 
 ENV LC_ALL "en_US.UTF-8"
+# SNAP wants the current folder '.' included in LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH ".:$LD_LIBRARY_PATH"
 
 # install SNAPPY
 RUN apt-get install default-jdk maven -y
@@ -35,10 +37,10 @@ COPY snap /src/snap
 RUN sh /src/snap/install.sh
 RUN update-alternatives --remove python /usr/bin/python3
 
-
 # Reduce the image size
 RUN apt-get autoremove -y
 RUN apt-get clean -y
+RUN rm -rf /src
 
 ENTRYPOINT ["/bin/bash"]
 #CMD ["/src/start.sh"]
