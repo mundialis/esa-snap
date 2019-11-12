@@ -4,14 +4,6 @@ FROM mundialis/grass-py3-pdal
 LABEL authors="Carmen Tawalika,Markus Neteler"
 LABEL maintainer="tawalika@mundialis.de,neteler@mundialis.de"
 
-ARG SOURCE_GIT_URL=https://github.com
-ARG SOURCE_GIT_REMOTE=mundialis
-ARG SOURCE_GIT_REPO=esa_snap_docker
-# can be "tags" (for tag) or "heads" (for) branch
-ARG SOURCE_GIT_TYPE=heads
-# can be a tag name or branch name
-ARG SOURCE_GIT_REF=master
-
 USER root
 
 # Install dependencies and tools
