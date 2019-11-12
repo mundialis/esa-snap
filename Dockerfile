@@ -34,7 +34,7 @@ RUN apt-get install default-jdk maven -y
 ENV JAVA_HOME "/usr/lib/jvm/java-11-openjdk-amd64"
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 COPY snap /src/snap
-RUN sh /src/snap/install.sh
+RUN bash /src/snap/install.sh
 RUN update-alternatives --remove python /usr/bin/python3
 
 # Reduce the image size
