@@ -1,4 +1,4 @@
-# /bin/sh
+#!/bin/sh
 
 # https://senbox.atlassian.net/wiki/spaces/SNAP/pages/30539778/Install+SNAP+on+the+command+line
 # https://senbox.atlassian.net/wiki/spaces/SNAP/pages/30539785/Update+SNAP+from+the+command+line
@@ -7,7 +7,7 @@
 SNAPVER=7
 
 # set JAVA_HOME (done in Docker as well)
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 
 # install module 'jpy' (A bi-directional Python-Java bridge)
 git clone https://github.com/bcdev/jpy.git /src/snap/jpy
@@ -29,3 +29,6 @@ sh /src/snap/esa-snap_all_unix_${SNAPVER}_0.sh -q -varfile /src/snap/response.va
 
 # test
 /usr/bin/python3 -c 'from snappy import ProductIO'
+
+# cleanup installer
+rm -f /src/snap/esa-snap_all_unix_${SNAPVER}_0.sh
