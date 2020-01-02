@@ -31,6 +31,8 @@ RUN echo "Install dependencies and tools";\
     echo "Install step done"
 
 ENV LC_ALL "en_US.UTF-8"
+# SNAP wants the current folder '.' included in LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH ".:$LD_LIBRARY_PATH"
 
 # install SNAPPY
 ENV JAVA_HOME "/usr/lib/jvm/java-1.8-openjdk"

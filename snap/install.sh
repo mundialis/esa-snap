@@ -36,6 +36,13 @@ sed -i 's+jdkhome="./jre"+jdkhome="$JAVA_HOME"+g' /usr/local/snap/etc/snap.conf
 /usr/local/snap/bin/snappy-conf /usr/bin/python3
 (cd /root/.snap/snap-python/snappy && python3 setup.py install)
 
+# increase the JAVA VM size to avoid NullPointer exception in Snappy during S-1 processing
+(cd /root/.snap/snap-python/snappy && sed -i "s/^java_max_mem:.*/java_max_mem: $java_max_mem/" snappy.ini)
+
+# get minor python version
+PYMINOR=$(python3 -c 'import platform; major, minor, patch = platform.python_version_tuple(); print(minor)')
+(cd /usr/local/lib/python3.$PYMINOR/dist-packages/snappy/ && sed -i "s/^java_max_mem:.*/java_max_mem: $java_max_mem/" snappy.ini)
+
 # test
 /usr/bin/python3 -c 'from snappy import ProductIO'
 
