@@ -44,6 +44,12 @@ rm -rf /usr/local/snap/jre
 
 # test
 /usr/bin/python3 -c 'from snappy import ProductIO'
+if [ -f /src/snap/about.py ]
+then
+    /usr/bin/python3 /src/snap/about.py
+    cp /src/snap/about.py /root/.snap/
+fi
+
 
 # cleanup installer
 rm -f /src/snap/esa-snap_all_unix_${SNAPVER}_0.sh
