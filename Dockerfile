@@ -48,3 +48,4 @@ COPY --from=build /root/.snap /root/.snap
 COPY --from=build /usr/local/snap /usr/local/snap
 RUN (cd /root/.snap/snap-python/snappy && python3 setup.py install)
 RUN /usr/bin/python3 -c 'from snappy import ProductIO'
+RUN /usr/bin/python3 /root/.snap/about.py
