@@ -10,8 +10,9 @@ java_max_mem=10G
 
 # install module 'jpy' (A bi-directional Python-Java bridge)
 git clone https://github.com/bcdev/jpy.git /src/snap/jpy
+python3 -m ensurepip
 pip3 install --upgrade pip wheel
-(cd /src/snap/jpy && python3 setup.py bdist_wheel)
+(cd /src/snap/jpy && python3 setup.py build maven bdist_wheel)
 # hack because ./snappy-conf will create this dir but also needs *.whl files...
 mkdir -p /root/.snap/snap-python/snappy
 cp /src/snap/jpy/dist/*.whl "/root/.snap/snap-python/snappy"

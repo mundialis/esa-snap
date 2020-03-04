@@ -1,4 +1,22 @@
-FROM alpine:edge as build
+FROM alpine:3.11 as base
+
+ARG OPENJDK_VERSION=8.232.09-r0
+ARG OPENJDK_PKGS_URL=https://github.com/mmacata/alpine-openjdk8/releases/download/$OPENJDK_VERSION
+
+RUN apk add curl
+RUN curl -L $OPENJDK_PKGS_URL/openjdk8-$OPENJDK_VERSION.apk > openjdk8-$OPENJDK_VERSION.apk
+RUN curl -L $OPENJDK_PKGS_URL/openjdk8-jre-$OPENJDK_VERSION.apk > openjdk8-jre-$OPENJDK_VERSION.apk
+RUN curl -L $OPENJDK_PKGS_URL/openjdk8-jre-base-$OPENJDK_VERSION.apk > openjdk8-jre-base-$OPENJDK_VERSION.apk
+RUN curl -L $OPENJDK_PKGS_URL/openjdk8-jre-lib-$OPENJDK_VERSION.apk > openjdk8-jre-lib-$OPENJDK_VERSION.apk
+
+RUN apk add --allow-untrusted \
+    openjdk8-jre-lib-$OPENJDK_VERSION.apk \
+    openjdk8-$OPENJDK_VERSION.apk \
+    openjdk8-jre-base-$OPENJDK_VERSION.apk \
+    openjdk8-jre-$OPENJDK_VERSION.apk
+
+
+FROM base as build
 
 LABEL authors="Carmen Tawalika,Markus Neteler"
 LABEL maintainer="tawalika@mundialis.de,neteler@mundialis.de"
@@ -40,7 +58,7 @@ COPY snap /src/snap
 RUN sh /src/snap/install.sh
 
 
-FROM alpine:edge
+FROM base as snappy
 
 RUN apk add openjdk8 python3
 ENV LD_LIBRARY_PATH ".:$LD_LIBRARY_PATH"
