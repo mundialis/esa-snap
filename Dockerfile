@@ -1,4 +1,4 @@
-FROM alpine:3.11 as base
+FROM alpine:3.12 as base
 
 ARG OPENJDK_VERSION=8.232.09-r0
 ARG OPENJDK_PKGS_URL=https://github.com/mmacata/alpine-openjdk8/releases/download/$OPENJDK_VERSION
