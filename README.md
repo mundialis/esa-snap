@@ -14,20 +14,20 @@ This docker image is based on alpine
 * alpine is based on musl libc and busybox. As oracle java depends on glibc, it
   doesn't work smoothely. With https://github.com/sgerrand/alpine-pkg-glibc this
   can be workarounded to a certain way but in our case not sufficient (conflicting dependencies).
-* Current SNAP Version (7.0.2) is recommended to be run with JAVA 8.
+* Current SNAP Version (8.0.0) is recommended to be run with JAVA 8.
   From Version 8, oracle java > 8 and openjdk in general will be supported officially (https://forum.step.esa.int/t/problems-running-tests-in-intellij/9350/8)
 
 
 ## Dev stuff
 
 Alternatively, a build approch was tried out. Kept here if needed further.
-As stable version 7.0.2 needs maven 3.6.0 (while alpine offers 3.6.3), so SNAP 8 was built for testing.
+As stable version 8.0.0 needs maven 3.6.0 (while alpine offers 3.6.3), so SNAP 8 was built for testing.
 
 ```
 
 FROM alpine:edge
 
-<!-- ARG SNAP_ENGINE_TAG=7.0.2 -->
+<!-- ARG SNAP_ENGINE_TAG=8.0.0 -->
 ENV JAVA_HOME "/usr/lib/jvm/java-1.8-openjdk"
 
 RUN apk add git openjdk8 maven

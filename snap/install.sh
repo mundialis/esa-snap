@@ -4,7 +4,7 @@
 # https://senbox.atlassian.net/wiki/spaces/SNAP/pages/30539785/Update+SNAP+from+the+command+line
 # http://step.esa.int/main/download/snap-download/
 
-SNAPVER=7
+SNAPVER=8
 # avoid NullPointer crash during S-1 processing
 java_max_mem=10G
 
