@@ -1,4 +1,4 @@
-# ESA SNAP docker image
+# ESA SNAP 8 docker image
 
 Docker image of ESA Sentinel Application Platform (SNAP) from http://step.esa.int/main/toolboxes/snap/
 
