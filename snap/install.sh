@@ -4,7 +4,7 @@
 # https://senbox.atlassian.net/wiki/spaces/SNAP/pages/30539785/Update+SNAP+from+the+command+line
 # http://step.esa.int/main/download/snap-download/
 
-SNAPVER=7
+SNAPVER=8
 # avoid NullPointer crash during S-1 processing
 java_max_mem=10G
 
@@ -33,7 +33,8 @@ sh /src/snap/esa-snap_all_unix_${SNAPVER}_0.sh -q -varfile /src/snap/response.va
 
 # one more hack to keep using system java
 sed -i 's+jdkhome="./jre"+jdkhome="$JAVA_HOME"+g' /usr/local/snap/etc/snap.conf
-/usr/local/snap/bin/snap --nosplash --nogui --modules --update-all
+# freezing at time, likely no longer needed
+# /usr/local/snap/bin/snap --nosplash --nogui --modules --update-all
 rm -rf /usr/local/snap/jre
 
 # create snappy and python binding with snappy
