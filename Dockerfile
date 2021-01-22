@@ -35,6 +35,7 @@ ENV BUILD_PACKAGES="\
 
 ENV PACKAGES="\
       fontconfig \
+      libgfortran \
       openjdk8 \
       python3 \
       vim \
