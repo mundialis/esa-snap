@@ -1,69 +1,65 @@
-FROM alpine:3.12 as base
+FROM ubuntu:18.04
 
-ARG OPENJDK_VERSION=8.232.09-r0
-ARG OPENJDK_PKGS_URL=https://github.com/mmacata/alpine-openjdk8/releases/download/$OPENJDK_VERSION
-
-RUN apk add curl
-RUN curl -L $OPENJDK_PKGS_URL/openjdk8-$OPENJDK_VERSION.apk > openjdk8-$OPENJDK_VERSION.apk
-RUN curl -L $OPENJDK_PKGS_URL/openjdk8-jre-$OPENJDK_VERSION.apk > openjdk8-jre-$OPENJDK_VERSION.apk
-RUN curl -L $OPENJDK_PKGS_URL/openjdk8-jre-base-$OPENJDK_VERSION.apk > openjdk8-jre-base-$OPENJDK_VERSION.apk
-RUN curl -L $OPENJDK_PKGS_URL/openjdk8-jre-lib-$OPENJDK_VERSION.apk > openjdk8-jre-lib-$OPENJDK_VERSION.apk
-
-RUN apk add --allow-untrusted \
-    openjdk8-jre-lib-$OPENJDK_VERSION.apk \
-    openjdk8-$OPENJDK_VERSION.apk \
-    openjdk8-jre-base-$OPENJDK_VERSION.apk \
-    openjdk8-jre-$OPENJDK_VERSION.apk
-
-
-FROM base as build
+# SNAP is still stuck with Python 3.6 => ubuntu:18.04
+# https://forum.step.esa.int/t/modulenotfounderror-no-module-named-jpyutil/25785/2
 
 LABEL authors="Carmen Tawalika,Markus Neteler"
 LABEL maintainer="tawalika@mundialis.de,neteler@mundialis.de"
 
+ENV DEBIAN_FRONTEND noninteractive
+
 USER root
 
-ENV BUILD_PACKAGES="\
-      gawk \
-      gcc \
-      git \
-      maven \
-      musl-dev \
-      python3-dev \
-      wget \
-      "
+# Install dependencies and tools
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends --no-install-suggests \
+    build-essential \
+    locales \
+    python3 \
+    python3-dev \
+    python3-pip \
+    python3-setuptools \
+    git \
+    vim \
+    wget \
+    zip \
+    && apt-get autoremove -y \
+    && apt-get clean -y
 
-ENV PACKAGES="\
-      fontconfig \
-      openjdk8 \
-      python3 \
-      vim \
-      ttf-dejavu \
-      zip \
-      "
+# Set the locale
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8
 
-RUN echo "Install dependencies and tools";\
-    apk update; \
-    apk add --no-cache --virtual .build-deps $BUILD_PACKAGES; \
-    apk add --no-cache $PACKAGES; \
-    echo "Install step done"
-
-ENV LC_ALL "en_US.UTF-8"
 # SNAP wants the current folder '.' included in LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH ".:$LD_LIBRARY_PATH"
+
 # install SNAPPY
-ENV JAVA_HOME "/usr/lib/jvm/java-1.8-openjdk"
-
+RUN apt-get install default-jdk maven -y
+ENV JAVA_HOME "/usr/lib/jvm/java-11-openjdk-amd64/"
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 COPY snap /src/snap
-RUN sh /src/snap/install.sh
+RUN bash /src/snap/install.sh
+RUN update-alternatives --remove python /usr/bin/python3
 
+# due to old Ubuntu we prefer to use the bundled GDAL:
+# INFO: org.esa.s2tbx.dataio.gdal.GDALVersion: GDAL not found on system. Internal GDAL 3.0.0 from distribution will be used. (f1)
 
-FROM base as snappy
+RUN echo "export PATH=\$PATH:/root/.snap/auxdata/gdal/gdal-3-0-0/bin" >> /root/.bashrc
 
-RUN apk add openjdk8 python3
-ENV LD_LIBRARY_PATH ".:$LD_LIBRARY_PATH"
-COPY --from=build /root/.snap /root/.snap
-COPY --from=build /usr/local/snap /usr/local/snap
+# tests
+# https://senbox.atlassian.net/wiki/spaces/SNAP/pages/50855941/Configure+Python+to+use+the+SNAP-Python+snappy+interface
 RUN (cd /root/.snap/snap-python/snappy && python3 setup.py install)
 RUN /usr/bin/python3 -c 'from snappy import ProductIO'
-RUN /usr/bin/python3 /root/.snap/about.py
+RUN /usr/bin/python3 /src/snap/about.py
+RUN /root/.snap/auxdata/gdal/gdal-3-0-0/bin/gdal-config --version
+
+# When using SNAP from Python, either do: sys.path.append('/root/.snap/snap-python')
+
+# Reduce the image size
+RUN apt-get autoremove -y
+RUN apt-get clean -y
+RUN rm -rf /src
+
+ENTRYPOINT ["/bin/bash"]
+#CMD ["/src/start.sh"]
