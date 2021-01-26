@@ -8,4 +8,6 @@ https://hub.docker.com/r/mundialis/esa-snap
 
 ## Background info
 
-This docker image is based on Ubuntu
+This docker image is based on Ubuntu (`ubuntu` branch). 
+
+Note: the Alpine based docker image is located in the `master` branch.
