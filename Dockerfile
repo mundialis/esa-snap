@@ -26,6 +26,7 @@ USER root
 ENV BUILD_PACKAGES="\
       gawk \
       gcc \
+      gcompat \
       git \
       maven \
       musl-dev \
@@ -35,6 +36,8 @@ ENV BUILD_PACKAGES="\
 
 ENV PACKAGES="\
       fontconfig \
+      gcompat \
+      libgfortran libgfortran5 \
       openjdk8 \
       python3 \
       vim \
