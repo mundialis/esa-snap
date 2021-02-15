@@ -27,9 +27,9 @@ RUN apt-get update && apt-get upgrade -y && \
     && apt-get clean -y
 
 # Set the locale
-ENV LANG en_US.UTF-8  
+ENV LANG en_US.utf8
 ENV LANGUAGE en_US:en  
-ENV LC_ALL en_US.UTF-8
+ENV LC_ALL en_US.utf8
 
 # SNAP wants the current folder '.' included in LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH ".:$LD_LIBRARY_PATH"
@@ -42,10 +42,14 @@ COPY snap /src/snap
 RUN bash /src/snap/install.sh
 RUN update-alternatives --remove python /usr/bin/python3
 
-# due to old Ubuntu we prefer to use the bundled GDAL:
+# due to Ubuntu-GDAL being too old we prefer to use the SNAP-bundled GDAL:
 # INFO: org.esa.s2tbx.dataio.gdal.GDALVersion: GDAL not found on system. Internal GDAL 3.0.0 from distribution will be used. (f1)
 
-RUN echo "export PATH=\$PATH:/root/.snap/auxdata/gdal/gdal-3-0-0/bin" >> /root/.bashrc
+# update SNAP from Web
+RUN /usr/local/snap/bin/snap --nosplash --nogui --modules --update-all --refresh
+
+# path
+RUN echo "export PATH=\$PATH:/usr/local/snap/bin/:/root/.snap/auxdata/gdal/gdal-3-0-0/bin" >> /root/.bashrc
 
 # tests
 # https://senbox.atlassian.net/wiki/spaces/SNAP/pages/50855941/Configure+Python+to+use+the+SNAP-Python+snappy+interface
