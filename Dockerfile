@@ -45,9 +45,6 @@ RUN update-alternatives --remove python /usr/bin/python3
 # due to Ubuntu-GDAL being too old we prefer to use the SNAP-bundled GDAL:
 # INFO: org.esa.s2tbx.dataio.gdal.GDALVersion: GDAL not found on system. Internal GDAL 3.0.0 from distribution will be used. (f1)
 
-# update SNAP from Web
-RUN /usr/local/snap/bin/snap --nosplash --nogui --modules --update-all --refresh
-
 # path
 RUN echo "export PATH=\$PATH:/usr/local/snap/bin/:/root/.snap/auxdata/gdal/gdal-3-0-0/bin" >> /root/.bashrc
 
