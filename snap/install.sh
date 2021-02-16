@@ -23,7 +23,7 @@ cp /src/snap/jpy/dist/*.whl "/root/.snap/snap-python/snappy"
 wget -q -O /src/snap/esa-snap_all_unix_${SNAPVER}_0.sh \
   "http://step.esa.int/downloads/${SNAPVER}.0/installers/esa-snap_all_unix_${SNAPVER}_0.sh"
 sh /src/snap/esa-snap_all_unix_${SNAPVER}_0.sh -q -varfile /src/snap/response.varfile
-/usr/local/snap/bin/snap --nosplash --nogui --modules --update-all
+/usr/local/snap/bin/snap --nosplash --nogui --modules --update-all --refresh
 
 # create snappy and python binding with snappy
 /usr/local/snap/bin/snappy-conf /usr/bin/python3
