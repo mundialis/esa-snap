@@ -23,7 +23,13 @@ cp /src/snap/jpy/dist/*.whl "/root/.snap/snap-python/snappy"
 wget -q -O /src/snap/esa-snap_all_unix_${SNAPVER}_0.sh \
   "http://step.esa.int/downloads/${SNAPVER}.0/installers/esa-snap_all_unix_${SNAPVER}_0.sh"
 sh /src/snap/esa-snap_all_unix_${SNAPVER}_0.sh -q -varfile /src/snap/response.varfile
-/usr/local/snap/bin/snap --nosplash --nogui --modules --update-all --refresh
+
+# Current workaround for "commands hang after they are actually executed":  https://senbox.atlassian.net/wiki/spaces/SNAP/pages/30539785/Update+SNAP+from+the+command+line
+# /usr/local/snap/bin/snap --nosplash --nogui --modules --update-all
+/usr/local/snap/bin/snap --nosplash --nogui --modules --update-all 2>&1 | while read -r line; do
+    echo "$line"
+    [ "$line" = "updates=0" ] && sleep 2 && pkill -TERM -f "snap/jre/bin/java"
+done
 
 # create snappy and python binding with snappy
 /usr/local/snap/bin/snappy-conf /usr/bin/python3

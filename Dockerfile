@@ -28,7 +28,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 # Set the locale
 ENV LANG en_US.utf8
-ENV LANGUAGE en_US:en  
+ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.utf8
 
 # SNAP wants the current folder '.' included in LD_LIBRARY_PATH
