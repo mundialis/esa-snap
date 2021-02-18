@@ -14,6 +14,7 @@ USER root
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y --no-install-recommends --no-install-suggests \
     build-essential \
+    libgfortran5 \
     locales \
     python3 \
     python3-dev \
