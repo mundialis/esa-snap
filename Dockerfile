@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-# SNAP is still stuck with Python 3.6 => ubuntu:18.04
+# SNAP is still stuck with Python 3.6, i.e. ubuntu:18.04
 # https://forum.step.esa.int/t/modulenotfounderror-no-module-named-jpyutil/25785/2
 
 LABEL authors="Carmen Tawalika,Markus Neteler"
