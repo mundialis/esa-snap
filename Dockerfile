@@ -1,19 +1,6 @@
-FROM alpine:3.14 as base
+FROM alpine:3.15 as base
 
-ARG OPENJDK_VERSION=8.232.09-r0
-ARG OPENJDK_PKGS_URL=https://github.com/mmacata/alpine-openjdk8/releases/download/$OPENJDK_VERSION
-
-RUN apk add curl
-RUN curl -L $OPENJDK_PKGS_URL/openjdk8-$OPENJDK_VERSION.apk > openjdk8-$OPENJDK_VERSION.apk
-RUN curl -L $OPENJDK_PKGS_URL/openjdk8-jre-$OPENJDK_VERSION.apk > openjdk8-jre-$OPENJDK_VERSION.apk
-RUN curl -L $OPENJDK_PKGS_URL/openjdk8-jre-base-$OPENJDK_VERSION.apk > openjdk8-jre-base-$OPENJDK_VERSION.apk
-RUN curl -L $OPENJDK_PKGS_URL/openjdk8-jre-lib-$OPENJDK_VERSION.apk > openjdk8-jre-lib-$OPENJDK_VERSION.apk
-
-RUN apk add --allow-untrusted \
-    openjdk8-jre-lib-$OPENJDK_VERSION.apk \
-    openjdk8-$OPENJDK_VERSION.apk \
-    openjdk8-jre-base-$OPENJDK_VERSION.apk \
-    openjdk8-jre-$OPENJDK_VERSION.apk
+RUN apk add openjdk8
 
 
 FROM base as build
@@ -37,7 +24,7 @@ ENV BUILD_PACKAGES="\
 ENV PACKAGES="\
       fontconfig \
       gcompat \
-      libgfortran libgfortran5 \
+      libgfortran \
       openjdk8 \
       python3 \
       vim \
