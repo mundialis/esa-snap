@@ -1,0 +1,43 @@
+name: Docker
+
+on:
+  push:
+    branches: [s1tbx]
+
+jobs:
+
+  docker:
+    name: build and push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Create image and tag names
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: mundialis/esa-snap
+          tags: |
+            type=sha,enable=true,priority=100,prefix=s1tbx-,suffix=,format=short
+          flavor: |
+            latest=auto
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN  }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          pull: true
+          context: .
+          tags: ${{ steps.meta.outputs.tags }}
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
