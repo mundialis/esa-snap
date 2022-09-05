@@ -47,14 +47,14 @@ RUN update-alternatives --remove python /usr/bin/python3
 # INFO: org.esa.s2tbx.dataio.gdal.GDALVersion: GDAL not found on system. Internal GDAL 3.0.0 from distribution will be used. (f1)
 
 # path
-RUN echo "export PATH=\$PATH:/usr/local/snap/bin/:/root/.snap/auxdata/gdal/gdal-3-0-0/bin" >> /root/.bashrc
+RUN echo "export PATH=\$PATH:/usr/local/snap/bin/:/root/.snap/auxdata/gdal/gdal-3-2-1/bin" >> /root/.bashrc
 
 # tests
 # https://senbox.atlassian.net/wiki/spaces/SNAP/pages/50855941/Configure+Python+to+use+the+SNAP-Python+snappy+interface
 RUN (cd /root/.snap/snap-python/snappy && python3 setup.py install)
 RUN /usr/bin/python3 -c 'from snappy import ProductIO'
 RUN /usr/bin/python3 /src/snap/about.py
-RUN /root/.snap/auxdata/gdal/gdal-3-0-0/bin/gdal-config --version
+RUN /root/.snap/auxdata/gdal/gdal-3-2-1/bin/gdal-config --version
 
 # When using SNAP from Python, either do: sys.path.append('/root/.snap/snap-python')
 
