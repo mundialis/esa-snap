@@ -1,4 +1,4 @@
-# ESA SNAP 8 docker image: s1tbx toolbox
+# ESA SNAP 9 docker image: s1tbx toolbox
 
 Docker image of ESA Sentinel Application Platform (SNAP) from http://step.esa.int/main/toolboxes/snap/
 
@@ -9,7 +9,6 @@ https://hub.docker.com/r/mundialis/esa-snap
 **Tag**|**Description**|**GitHub branch**|**Base image**|**Size**|**docker pull command**
 :-----:|:-----:|:-----:|:-----:|:-----:|:-----:
 s1tbx |Only s1tbx toolbox| [s1tbx](https://github.com/mundialis/esa-snap/tree/s1tbx)   | Alpine based| 600 MB| `docker pull mundialis/esa-snap:s1tbx`
-latest|All SNAP toolboxes| [master](https://github.com/mundialis/esa-snap/)            | Alpine based|1.15 GB| `docker pull mundialis/esa-snap:latest`
 ubuntu|All SNAP toolboxes| [ubuntu](https://github.com/mundialis/esa-snap/tree/ubuntu) | Ubuntu based|   2 GB| `docker pull mundialis/esa-snap:ubuntu`
 
 ## Background info
