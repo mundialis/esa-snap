@@ -20,6 +20,7 @@ jobs:
           images: mundialis/esa-snap
           tags: |
             type=sha,enable=true,priority=100,prefix=s1tbx-,suffix=,format=short
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 's1tbx') }}
           flavor: |
             latest=auto
       - name: Set up QEMU
