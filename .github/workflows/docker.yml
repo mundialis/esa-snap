@@ -2,7 +2,7 @@ name: Docker
 
 on:
   push:
-    branches: [s1tbx]
+    branches: [ubuntu]
 
 jobs:
 
