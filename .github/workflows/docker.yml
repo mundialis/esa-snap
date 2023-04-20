@@ -8,7 +8,7 @@ jobs:
 
   docker:
     name: build and push
-    runs-on: s1tbx-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
