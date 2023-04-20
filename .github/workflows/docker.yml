@@ -19,8 +19,8 @@ jobs:
         with:
           images: mundialis/esa-snap
           tags: |
-            type=sha,enable=true,priority=100,prefix=s1tbx-,suffix=,format=short
-            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'ubuntu') }}
+            type=sha,enable=true,priority=100,prefix=ubuntu-,suffix=,format=short
+            type=raw,value=ubuntu,enable=${{ github.ref == format('refs/heads/{0}', 'ubuntu') }}
           flavor: |
             latest=auto
       - name: Set up QEMU
