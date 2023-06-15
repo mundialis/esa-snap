@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Create image and tag names
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: mundialis/esa-snap
           tags: |
