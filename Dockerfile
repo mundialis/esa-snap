@@ -1,4 +1,4 @@
-FROM alpine:3.15 as base
+FROM alpine:3.18 as base
 
 RUN apk add openjdk8
 
@@ -55,8 +55,13 @@ RUN apk add openjdk8 python3 ttf-dejavu
 ENV LD_LIBRARY_PATH ".:$LD_LIBRARY_PATH"
 COPY --from=build /root/.snap /root/.snap
 COPY --from=build /usr/local/snap /usr/local/snap
-RUN (cd /root/.snap/snap-python/snappy && python3 setup.py install)
+# RUN (cd /root/.snap/snap-python/snappy && python3 setup.py install)
 # update SNAP from Web, requires font
 RUN /usr/local/snap/bin/snap --nosplash --nogui --modules --update-all
-RUN /usr/bin/python3 -c 'from snappy import ProductIO'
-RUN /usr/bin/python3 /root/.snap/about.py
+#RUN /usr/bin/python3 -c 'from snappy import ProductIO'
+# RUN /usr/bin/python3 /root/.snap/about.py
+
+# add gpt to PATH
+ENV PATH="${PATH}:/usr/local/snap/bin"
+# test gpt
+RUN gpt -h

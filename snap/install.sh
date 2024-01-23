@@ -8,14 +8,17 @@ SNAPVER=9
 # avoid NullPointer crash during S-1 processing
 java_max_mem=10G
 
+
 # install module 'jpy' (A bi-directional Python-Java bridge)
-git clone https://github.com/bcdev/jpy.git /src/snap/jpy
-python3 -m ensurepip
-pip3 install --upgrade pip wheel
-(cd /src/snap/jpy && python3 setup.py build maven bdist_wheel)
+
+
+#git clone https://github.com/bcdev/jpy.git /src/snap/jpy
+#python3 -m ensurepip
+#pip3 install --upgrade pip wheel
+#(cd /src/snap/jpy && python3 setup.py build maven bdist_wheel)
 # hack because ./snappy-conf will create this dir but also needs *.whl files...
-mkdir -p /root/.snap/snap-python/snappy
-cp /src/snap/jpy/dist/*.whl "/root/.snap/snap-python/snappy"
+#mkdir -p /root/.snap/snap-python/snappy
+#cp /src/snap/jpy/dist/*.whl "/root/.snap/snap-python/snappy"
 
 
 # install and update snap
@@ -32,14 +35,14 @@ sed -i 's+jdkhome="./jre"+jdkhome="$JAVA_HOME"+g' /usr/local/snap/etc/snap.conf
 rm -rf /usr/local/snap/jre
 
 # create snappy and python binding with snappy
-/usr/local/snap/bin/snappy-conf /usr/bin/python3
-(cd /root/.snap/snap-python/snappy && python3 setup.py install)
+#/usr/local/snap/bin/snappy-conf /usr/bin/python3
+#(cd /root/.snap/snap-python/snappy && python3 setup.py install)
 
 # increase the JAVA VM size to avoid NullPointer exception in Snappy during S-1 processing
-(cd /root/.snap/snap-python/snappy && sed -i "s/^java_max_mem:.*/java_max_mem: $java_max_mem/" snappy.ini)
+#(cd /root/.snap/snap-python/snappy && sed -i "s/^java_max_mem:.*/java_max_mem: $java_max_mem/" snappy.ini)
 
 # test
-/usr/bin/python3 -c 'from snappy import ProductIO'
+#/usr/bin/python3 -c 'from snappy import ProductIO'
 if [ -f /src/snap/about.py ]
 then
     /usr/bin/python3 /src/snap/about.py
