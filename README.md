@@ -6,11 +6,11 @@ The related docker images are created and available for download from here:
 
 https://hub.docker.com/r/mundialis/esa-snap
 
-**Tag**|**Description**|**GitHub branch**|**Base image**|**Size**|**docker pull command**
-:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
-s1tbx |Only s1tbx toolbox| [s1tbx](https://github.com/mundialis/esa-snap/tree/s1tbx)  | Alpine 3.15 based | 600 MB| `docker pull mundialis/esa-snap:s1tbx`
-latest|Only s1tbx toolbox| [s1tbx](https://github.com/mundialis/esa-snap/tree/s1tbx)  | Alpine 3.15 based | 600 MB| `docker pull mundialis/esa-snap:latest`
-ubuntu|All SNAP toolboxes| [ubuntu](https://github.com/mundialis/esa-snap/tree/ubuntu)| Ubuntu 18.04 based|   2 GB| `docker pull mundialis/esa-snap:ubuntu`
+**Tag**|**Description**|**GitHub branch**|   **Base image**   | **Size** |**docker pull command**
+:-----:|:-----:|:-----:|:------------------:|:--------:|:-----:
+s1tbx |Only s1tbx toolbox| [s1tbx](https://github.com/mundialis/esa-snap/tree/s1tbx)  | Alpine 3.18 based  |  1.4 GB  | `docker pull mundialis/esa-snap:s1tbx`
+latest|Only s1tbx toolbox| [s1tbx](https://github.com/mundialis/esa-snap/tree/s1tbx)  | Alpine 3.18 based  |  1.4 GB  | `docker pull mundialis/esa-snap:latest`
+ubuntu|All SNAP toolboxes| [ubuntu](https://github.com/mundialis/esa-snap/tree/ubuntu)| Ubuntu 18.04 based |   2 GB   | `docker pull mundialis/esa-snap:ubuntu`
 
 
 ## Installation
