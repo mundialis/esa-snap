@@ -42,7 +42,7 @@ ENV LC_ALL "en_US.UTF-8"
 # SNAP wants the current folder '.' included in LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH ".:/usr/lib/jvm/java-11-openjdk/jre/lib/server/:$LD_LIBRARY_PATH"
 
-# # install SNAPPY
+# install SNAPPY
 ENV JAVA_HOME "/usr/lib/jvm/java-11-openjdk"
 
 COPY snap /src/snap
