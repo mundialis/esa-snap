@@ -51,7 +51,7 @@ RUN sh /src/snap/install.sh
 
 FROM base as snappy
 
-RUN apk add openjdk8 python3 ttf-dejavu
+RUN apk add openjdk11 python3 ttf-dejavu
 ENV LD_LIBRARY_PATH ".:$LD_LIBRARY_PATH"
 COPY --from=build /root/.snap /root/.snap
 COPY --from=build /usr/local/snap /usr/local/snap
