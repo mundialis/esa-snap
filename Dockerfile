@@ -1,6 +1,6 @@
 FROM alpine:3.18 as base
 
-RUN apk add openjdk8
+RUN apk add openjdk11
 
 
 FROM base as build
@@ -25,7 +25,7 @@ ENV PACKAGES="\
       fontconfig \
       gcompat \
       libgfortran \
-      openjdk8 \
+      openjdk11 \
       python3 \
       vim \
       ttf-dejavu \
@@ -40,10 +40,10 @@ RUN echo "Install dependencies and tools";\
 
 ENV LC_ALL "en_US.UTF-8"
 # SNAP wants the current folder '.' included in LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH ".:/usr/lib/jvm/java-8-openjdk/jre/lib/amd64/server/:$LD_LIBRARY_PATH"
+ENV LD_LIBRARY_PATH ".:/usr/lib/jvm/java-11-openjdk/jre/lib/server/:$LD_LIBRARY_PATH"
 
-# install SNAPPY
-ENV JAVA_HOME "/usr/lib/jvm/java-1.8-openjdk"
+# # install SNAPPY
+ENV JAVA_HOME "/usr/lib/jvm/java-11-openjdk"
 
 COPY snap /src/snap
 RUN sh /src/snap/install.sh
