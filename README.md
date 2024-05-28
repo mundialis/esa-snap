@@ -79,16 +79,15 @@ See there for related instructions.
 
 ## Alpine dev stuff
 
-Alternatively, a build approach was tried out. Kept here if needed further.
-As the stable SNAP version 7.0.2 needs maven 3.6.0 (while alpine offers 3.6.3), so SNAP 8 was built for testing.
+Alternatively, we have built it on Alpine Linux. Kept here if needed further.
 
 ```
 FROM alpine:edge
 
-<!-- ARG SNAP_ENGINE_TAG=8.0.0 -->
-ENV JAVA_HOME "/usr/lib/jvm/java-1.8-openjdk"
+<!-- ARG SNAP_ENGINE_TAG=10.0.0 -->
+ENV JAVA_HOME "/usr/lib/jvm/java-11-openjdk"
 
-RUN apk add git openjdk8 maven
+RUN apk add git openjdk11 maven
 RUN git clone https://github.com/senbox-org/snap-engine.git /src/snap/snap-engine
 WORKDIR /src/snap/snap-engine
 <!-- RUN git checkout $SNAP_ENGINE_TAG -->
