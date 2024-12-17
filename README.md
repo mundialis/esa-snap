@@ -79,7 +79,7 @@ See there for related instructions.
 
 ## Alpine dev stuff
 
-Alternatively, we have built it on Alpine Linux. Kept here if needed further.
+Alternatively, a build approach was tried out. Kept here if needed further.
 
 ```
 FROM alpine:edge
