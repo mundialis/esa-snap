@@ -1,4 +1,4 @@
-FROM alpine:3.23 as base
+FROM alpine:3.24 as base
 
 RUN apk add openjdk8
 
