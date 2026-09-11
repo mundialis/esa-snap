@@ -8,3 +8,15 @@ on:
 jobs:
   codeql:
     uses: mundialis/github-workflows/.github/workflows/codeql.yml@main
+    # the workflow requires permissions that need to be granted by the parent job:
+    permissions:
+      # required for all workflows
+      security-events: write
+
+      # required to fetch internal or private CodeQL packs
+      packages: read
+
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+
