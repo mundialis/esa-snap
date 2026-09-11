@@ -4,13 +4,13 @@
 # https://senbox.atlassian.net/wiki/spaces/SNAP/pages/30539785/Update+SNAP+from+the+command+line
 # http://step.esa.int/main/download/snap-download/
 
-SNAPVER=9
+SNAPVER=10
 # avoid NullPointer crash during S-1 processing
 java_max_mem=10G
 
 # install and update snap
 wget -q -O /src/snap/esa-snap_all_unix_${SNAPVER}_0_0.sh \
-  "http://step.esa.int/downloads/${SNAPVER}.0/installers/esa-snap_all_unix_${SNAPVER}_0_0.sh"
+  "https://step.esa.int/downloads/${SNAPVER}.0/installers/esa-snap_all_linux-${SNAPVER}.0.0.sh"
 
 # # hack to make it run on alpine
 sh /src/snap/esa-snap_all_unix_${SNAPVER}_0_0.sh -q -varfile /src/snap/response.varfile
