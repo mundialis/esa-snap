@@ -1,0 +1,10 @@
+on:
+  push:
+    branches: [ "s1tbx" ]
+  schedule:
+    # Check every Monday at 04:36
+    - cron: "36 04 * * 1"
+
+jobs:
+  codeql:
+    uses: mundialis/github-workflows/.github/workflows/codeql.yml@main
