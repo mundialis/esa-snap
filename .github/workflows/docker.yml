@@ -10,6 +10,9 @@ jobs:
     name: build and push
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -48,12 +51,3 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-
-  sbom-scan:
-    permissions:
-      contents: read
-      security-events: write
-
-    uses: mundialis/github-workflows/.github/workflows/sbom-vulnerability-scan.yml@main
-    with:
-      dockerfile: Dockerfile

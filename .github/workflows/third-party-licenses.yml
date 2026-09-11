@@ -11,7 +11,4 @@ jobs:
   generate-third-party-licenses:
     uses: mundialis/github-workflows/.github/workflows/third-party-licenses.yml@main
     with:
-      # dockerfile: docker/actinia-core-alpine/Dockerfile
-      requirements: requirements.txt
-      # pyproject: pyproject.toml
-      additional-packages: "libgdal-dev gdal-bin build-essential"
+      dockerfile: Dockerfile
