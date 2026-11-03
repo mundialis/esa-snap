@@ -53,7 +53,7 @@ RUN sh /src/snap/install.sh
 FROM base as snap
 
 # Keep the system JVM and native compatibility libraries in the runtime image.
-RUN apk add openjdk21 gcompat ttf-dejavu
+RUN apk add --no-cache openjdk21 gcompat ttf-dejavu bash python3
 ENV LD_LIBRARY_PATH ".:$LD_LIBRARY_PATH"
 ENV JAVA_HOME="/usr/lib/jvm/java-21-openjdk"
 COPY --from=build /usr/local/bin/snaphu /usr/local/bin/snaphu
